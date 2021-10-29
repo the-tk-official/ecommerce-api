@@ -1,0 +1,8 @@
+docker-compose build
+docker-compose up
+docker-compose run web py manage.py collectstatic
+docker-compose run web py manage.py makemigrations
+docker-compose run web py manage.py migrate
+docker-compose up -d                                        | for detached mode             | ---
+docker-compose run web py manage.py **commands              |                               | ---
+docker image prune                                          |                               | ---

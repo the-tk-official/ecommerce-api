@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+    web:
+      build: .
+      command: bash -c "python manage.py runserver 0.0.0.0:8000"
+      container_name: backend
+      restart: always
+      volumes:
+        - .:/backend
+      ports:
+        - "8000:8000"
+      networks:
+        - backend_net
+
+    postgres:
+      container_name: backend
+      image: postgres
+      environment:
+        POSTGRES_USER: 'ecommerce_user'
+        POSTGRES_PASSWORD: 'ecommerce_password'
+        PGDATA: /data/postgres
+      volumes:
+        - postgres:/data/postgres
+      ports:
+        - "5432:5432"
+      networks:
+        - ecommerce_net
+
+networks:
+  backend_net:
+    driver: bridge
+
+volumes:
+  postgres:
